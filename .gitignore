@@ -1,9 +1,11 @@
 # Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
-.mvn/wrapper/maven-wrapper.properties
+
+.mvn
 mvnw
 mvnw.cmd
+
 
 # IntelliJ IDEA
 .idea/
@@ -48,3 +50,4 @@ application-local.properties
 application-local.yml
 application-secret.properties
 application-secret.yml
+orderflow/docker-compose.yml
