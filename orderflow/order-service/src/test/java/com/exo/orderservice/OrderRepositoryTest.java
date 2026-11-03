@@ -21,7 +21,6 @@ class OrderRepositoryTest {
     @Test
     void flywayMigratedSchemaIsValidAndWritable() {
         MigrationInfoService info = flyway.info();
-
         assertThat(info.pending()).isEmpty();
         }
 }
