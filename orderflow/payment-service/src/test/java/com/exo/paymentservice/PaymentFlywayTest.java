@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(PostgresContainerConfig.class)
-class PaymentRepositoryTest {
+class PaymentFlywayTest {
 
     @Autowired
     Flyway flyway;

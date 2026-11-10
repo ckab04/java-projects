@@ -16,16 +16,17 @@ import java.math.BigDecimal;
 @DiscriminatorColumn(name = "payment_type", discriminatorType = DiscriminatorType.STRING)
 @Setter
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Payment extends PaymentCommonValues {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(AccessLevel.NONE)
     private Long id;
 
+    @Column(nullable = false)
     private Long orderId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 19, scale = 4)
     private BigDecimal amount;
 
     @Column(nullable = false, length = 3)

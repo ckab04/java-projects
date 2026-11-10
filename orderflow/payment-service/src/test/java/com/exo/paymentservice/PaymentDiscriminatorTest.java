@@ -27,6 +27,7 @@ class PaymentDiscriminatorTest {
     @Test
     void reloadingPaymentsThroughBaseTypeReturnsCorrectSubclass() {
         CardPayment card = new CardPayment();
+        card.setOrderId(1L);
         card.setAmount(new BigDecimal("50.00"));
         card.setCurrency("EUR");
         card.setStatus(PaymentStatus.COMPLETED);
@@ -34,6 +35,7 @@ class PaymentDiscriminatorTest {
         card.setCardBrand("VISA");
 
         BankTransfer transfer = new BankTransfer();
+        transfer.setOrderId(2L);
         transfer.setAmount(new BigDecimal("120.00"));
         transfer.setCurrency("EUR");
         transfer.setStatus(PaymentStatus.PENDING);
