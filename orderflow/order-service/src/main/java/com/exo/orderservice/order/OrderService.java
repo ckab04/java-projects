@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,12 +25,14 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final OrderMapper orderMapper;
+    private final Clock clock;
 
 
-    OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, OrderMapper orderMapper){
+    OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, OrderMapper orderMapper, Clock clock){
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.orderMapper = orderMapper;
+        this.clock = clock;
     }
 
     @Transactional
@@ -40,7 +43,7 @@ public class OrderService {
         Order order = orderMapper.toEntity(request);
         order.setCustomer(customer);
         order.setOrderNumber(generateOrderNumber());
-        order.setOrderDate(Instant.now());
+        order.setOrderDate(Instant.now(clock));
         order.setStatus(OrderStatus.PENDING);
 
         BigDecimal subtotal = BigDecimal.ZERO;
@@ -67,7 +70,7 @@ public class OrderService {
     }
 
     private String generateOrderNumber(){
-        String date = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+        String date = LocalDate.now(clock).format(DateTimeFormatter.BASIC_ISO_DATE);
         long sequence = orderRepository.nextOrderNumberSequence();
         return "ORD-%s-%06d".formatted(date, sequence);
     }

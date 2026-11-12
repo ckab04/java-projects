@@ -26,7 +26,7 @@ public abstract class Payment extends PaymentCommonValues {
     @Column(nullable = false)
     private Long orderId;
 
-    @Column(nullable = false, precision = 19, scale = 4)
+    @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal amount;
 
     @Column(nullable = false, length = 3)
