@@ -1,7 +1,7 @@
 package com.exo.orderservice.order;
 
 
-import com.exo.orderservice.common.Address;
+import com.exo.orderservice.common.AddressDto;
 import com.exo.orderservice.orderline.CreateOrderLineRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ public record CreateOrderRequest(
                                  Long customerId,
 
                                  @NotNull @Valid
-                                 Address address,
+                                 AddressDto address,
 
                                  @NotBlank @Size(max = 50)
                                  String paymentMethod,

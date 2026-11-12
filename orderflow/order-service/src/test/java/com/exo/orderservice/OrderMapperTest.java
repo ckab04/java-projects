@@ -1,6 +1,6 @@
 package com.exo.orderservice;
 
-import com.exo.orderservice.common.Address;
+import com.exo.orderservice.common.AddressDto;
 import com.exo.orderservice.order.CreateOrderRequest;
 import com.exo.orderservice.order.Order;
 import com.exo.orderservice.order.OrderMapper;
@@ -20,12 +20,7 @@ class OrderMapperTest {
 
     @Test
     void mapsRequestFieldsOntoOrderAndLeavesServerManagedFieldsUntouched() {
-        Address address = new Address();
-        address.setRecipientName("Jane Doe");
-        address.setStreetLine("1 Main St");
-        address.setCity("Berlin");
-        address.setPostalCode("10115");
-        address.setCountry("DE");
+        AddressDto address = new AddressDto("Jane Doe", "1 Main St", "Berlin", "10115", "DE");
 
         CreateOrderRequest request = new CreateOrderRequest(
                 42L,
@@ -38,7 +33,11 @@ class OrderMapperTest {
 
         assertThat(order.getCurrency()).isEqualTo("EUR");
         assertThat(order.getPaymentMethod()).isEqualTo("CARD");
-        assertThat(order.getAddress()).isEqualTo(address);
+        assertThat(order.getAddress().getRecipientName()).isEqualTo("Jane Doe");
+        assertThat(order.getAddress().getStreetLine()).isEqualTo("1 Main St");
+        assertThat(order.getAddress().getCity()).isEqualTo("Berlin");
+        assertThat(order.getAddress().getPostalCode()).isEqualTo("10115");
+        assertThat(order.getAddress().getCountry()).isEqualTo("DE");
 
         assertThat(order.getId()).isNull();
         assertThat(order.getOrderNumber()).isNull();

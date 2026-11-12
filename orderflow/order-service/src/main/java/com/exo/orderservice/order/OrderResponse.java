@@ -1,7 +1,7 @@
 package com.exo.orderservice.order;
 
 
-import com.exo.orderservice.common.Address;
+import com.exo.orderservice.common.AddressDto;
 import com.exo.orderservice.common.OrderStatus;
 import com.exo.orderservice.customer.CustomerSummaryDto;
 import com.exo.orderservice.orderline.OrderLineDto;
@@ -21,7 +21,7 @@ public record OrderResponse(
         BigDecimal totalAmount,
         String currency,
         String paymentMethod,
-        Address address,
+        AddressDto address,
         CustomerSummaryDto customer,
         List<OrderLineDto> lines
 ) {

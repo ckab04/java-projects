@@ -1,5 +1,7 @@
 package com.exo.orderservice.order;
 
+import com.exo.orderservice.common.Address;
+import com.exo.orderservice.common.AddressDto;
 import com.exo.orderservice.customer.Customer;
 import com.exo.orderservice.customer.CustomerSummaryDto;
 import com.exo.orderservice.orderline.CreateOrderLineRequest;
@@ -42,4 +44,8 @@ public interface OrderMapper {
 
     @BeanMapping(ignoreUnmappedSourceProperties = {"createdAt", "updatedAt", "dateOfBirth", "address"})
     CustomerSummaryDto toSummary(Customer customer);
+
+    Address toEntity(AddressDto dto);
+
+    AddressDto toDto(Address address);
 }
