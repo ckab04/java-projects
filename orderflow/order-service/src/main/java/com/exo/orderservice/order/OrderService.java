@@ -5,7 +5,7 @@ import com.exo.orderservice.common.OrderStatus;
 import com.exo.orderservice.customer.Customer;
 import com.exo.orderservice.customer.CustomerRepository;
 import com.exo.orderservice.exceptions.CustomerNotFoundException;
-import com.exo.orderservice.exceptions.OrderNotFound;
+import com.exo.orderservice.exceptions.OrderNotFoundException;
 import com.exo.orderservice.orderline.CreateOrderLineRequest;
 import com.exo.orderservice.orderline.OrderLine;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Instant;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class OrderService {
@@ -61,11 +62,13 @@ public class OrderService {
     @Transactional(readOnly = true)
     public OrderResponse getOrder(Long orderId){
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFound(orderId));
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
         return orderMapper.toResponse(order);
     }
 
     private String generateOrderNumber(){
-        return "ORD-" + UUID.randomUUID();
+        String date = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+        long sequence = orderRepository.nextOrderNumberSequence();
+        return "ORD-%s-%06d".formatted(date, sequence);
     }
 }
