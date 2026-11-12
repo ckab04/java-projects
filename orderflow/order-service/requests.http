@@ -1,0 +1,54 @@
+@baseUrl = http://localhost:8080
+
+### Create an order
+# Requires an existing customer (see payment-service/order-service seed data,
+# or insert one directly: customerId 1 is used below).
+POST {{baseUrl}}/api/v1/orders
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "address": {
+    "recipientName": "Jane Doe",
+    "streetLine": "1 Main St",
+    "city": "Berlin",
+    "postalCode": "10115",
+    "country": "DE"
+  },
+  "paymentMethod": "CARD",
+  "currency": "EUR",
+  "lines": [
+    { "productId": 7, "productName": "Widget", "unitPrice": 9.99, "quantity": 3 }
+  ]
+}
+
+> {%
+    client.global.set("orderId", response.body.id);
+    client.global.set("orderNumber", response.body.orderNumber);
+%}
+
+### Fetch the order just created
+GET {{baseUrl}}/api/v1/orders/{{orderId}}
+
+### Fetch a non-existent order
+# Currently returns 500, not 404 — there's no @ControllerAdvice yet mapping
+# OrderNotFoundException to a proper HTTP status.
+GET {{baseUrl}}/api/v1/orders/999999999
+
+### Create an order with invalid data — demonstrates Bean Validation (400)
+# customerId missing, currency wrong length, empty lines
+POST {{baseUrl}}/api/v1/orders
+Content-Type: application/json
+
+{
+  "address": {
+    "recipientName": "Jane Doe",
+    "streetLine": "1 Main St",
+    "city": "Berlin",
+    "postalCode": "10115",
+    "country": "DE"
+  },
+  "paymentMethod": "CARD",
+  "currency": "EURO",
+  "lines": []
+}
