@@ -5,12 +5,15 @@ import com.exo.orderservice.customer.CustomerSummaryDto;
 import com.exo.orderservice.orderline.CreateOrderLineRequest;
 import com.exo.orderservice.orderline.OrderLine;
 import com.exo.orderservice.orderline.OrderLineDto;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.ERROR)
 public interface OrderMapper {
 
+    @BeanMapping(ignoreUnmappedSourceProperties = {"customerId", "lines"})
     @Mapping(target = "orderNumber", ignore = true)
     @Mapping(target = "orderDate", ignore = true)
     @Mapping(target = "shippedDate", ignore = true)
@@ -31,10 +34,12 @@ public interface OrderMapper {
     @Mapping(target = "updatedAt", ignore = true)
     OrderLine toEntity(CreateOrderLineRequest request);
 
+    @BeanMapping(ignoreUnmappedSourceProperties = {"createdAt", "updatedAt"})
     OrderResponse toResponse(Order order);
 
-    @Mapping(target = "productId", ignore = true)
+    @BeanMapping(ignoreUnmappedSourceProperties = {"createdAt", "updatedAt", "productDescription", "order"})
     OrderLineDto toDto(OrderLine line);
 
+    @BeanMapping(ignoreUnmappedSourceProperties = {"createdAt", "updatedAt", "dateOfBirth", "address"})
     CustomerSummaryDto toSummary(Customer customer);
 }

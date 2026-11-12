@@ -1,6 +1,7 @@
 package com.exo.orderservice.order;
 
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class OrderController {
 
     @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse addOrder(@RequestBody CreateOrderRequest orderRequest){
+    public OrderResponse addOrder(@Valid @RequestBody CreateOrderRequest orderRequest){
         return this.orderService.addOrder(orderRequest);
     }
 

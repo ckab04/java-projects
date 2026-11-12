@@ -23,6 +23,7 @@ public class OrderLine extends CommonValues {
     @Setter(AccessLevel.NONE)
     private Long id;
 
+    private Long productId;
     private String productName;
     private String productDescription;
 
