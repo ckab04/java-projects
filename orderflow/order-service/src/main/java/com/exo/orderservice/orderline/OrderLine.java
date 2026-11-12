@@ -28,7 +28,11 @@ public class OrderLine extends CommonValues {
     private String productDescription;
 
     private int quantity;
+
+    @Column(precision = 19, scale = 2)
     private BigDecimal unitPrice;
+
+    @Column(precision = 19, scale = 2)
     private BigDecimal lineTotal;
 
     @ManyToOne(fetch = FetchType.LAZY)

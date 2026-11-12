@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -44,13 +45,14 @@ public class OrderService {
         BigDecimal subtotal = BigDecimal.ZERO;
         for (CreateOrderLineRequest lineRequest : request.lines()) {
             OrderLine line = orderMapper.toEntity(lineRequest);
-            BigDecimal lineTotal = line.getUnitPrice().multiply(BigDecimal.valueOf(line.getQuantity()));
+            BigDecimal lineTotal = line.getUnitPrice().multiply(BigDecimal.valueOf(line.getQuantity()))
+                    .setScale(2, RoundingMode.HALF_EVEN);
             line.setLineTotal(lineTotal);
             order.addLine(line);
             subtotal = subtotal.add(lineTotal);
         }
-        order.setSubtotal(subtotal);
-        order.setTotalAmount(subtotal);
+        order.setSubtotal(subtotal.setScale(2, RoundingMode.HALF_EVEN));
+        order.setTotalAmount(subtotal.setScale(2, RoundingMode.HALF_EVEN));
 
         Order saved = orderRepository.save(order);
         return orderMapper.toResponse(saved);

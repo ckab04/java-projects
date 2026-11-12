@@ -38,10 +38,10 @@ public class Order extends CommonValues {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @Column(precision = 19, scale = 4)
+    @Column(precision = 19, scale = 2)
     private BigDecimal subtotal;
 
-    @Column(precision = 19, scale = 4)
+    @Column(precision = 19, scale = 2)
     private BigDecimal totalAmount;
 
     @Column(length = 3)
