@@ -24,7 +24,7 @@ public class OrderController {
 
 
     @GetMapping("/orders/{orderId}")
-    public OrderResponse getOrder(@Valid @PathVariable Long orderId){
+    public OrderResponse getOrder(@PathVariable Long orderId){
         return this.orderService.getOrder(orderId);
     }
 

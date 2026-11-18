@@ -3,6 +3,7 @@ package com.exo.orderservice.order;
 
 import com.exo.orderservice.common.AddressDto;
 import com.exo.orderservice.orderline.CreateOrderLineRequest;
+import com.exo.orderservice.validation.ValidCurrency;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,7 +22,7 @@ public record CreateOrderRequest(
                                  @NotBlank @Size(max = 50)
                                  String paymentMethod,
 
-                                 @NotBlank @Size(min = 3, max = 3)
+                                 @NotBlank @ValidCurrency
                                  String currency,
 
                                  @NotEmpty(message = "Order must contain at least one line")

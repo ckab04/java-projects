@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ValidCurrencyValidator.class)
 public @interface ValidCurrency {
-    String message() default "...";
+    String message() default "Must be a valid ISO 4217 currency code";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
